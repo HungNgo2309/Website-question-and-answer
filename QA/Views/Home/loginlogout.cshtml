@@ -1,0 +1,56 @@
+﻿@using QA.Models
+@{
+    /**/
+
+    /**/
+    Account ac = (Account)Session["TaiKhoan"];
+    
+}
+<style>
+    a:hover {
+        color: forestgreen;
+    }
+</style>
+@if (Session["TaiKhoan"] == null)
+{
+    <a href="@Url.Action("Register", "User")">Đăng kí</a>
+    <a href="@Url.Action("Login", "User")">Đăng nhập</a>}
+else
+{
+    <div class="dropdown">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-user"></span> Xin chào:@ac.UserName
+        </button>
+        <div class="dropdown-menu">
+            <i class="fa fa-sign-out" aria-hidden="true"></i><a class="dropdown-item" href="@Url.Action("Logout", "Info")">Đăng xuất</a>
+            <a class="dropdown-item" href="@Url.Action( "Info", "Info")"><i class="fa fa-info-circle" aria-hidden="true"></i>Thay đổi thông tin</a>
+            <a class="dropdown-item" data-toggle="modal" data-target="#myModal"><i class="fa fa-duotone fa-bell"></i>Thông báo</a>
+        </div>
+    </div>
+    
+}
+   @if (ac != null)
+   { <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    @Html.Action("Notify","Info")
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   }

@@ -1,0 +1,29 @@
+﻿
+@if (ViewBag.ThongBao != null)
+{
+    <script>
+        alert("@Html.Raw(@ViewBag.ThongBao)")
+    </script>
+}
+<div id="m-recent" class="container tab-pane fade">
+    @using (Html.BeginForm("AddQ", "Home"))
+    {
+        <label class="h3">Topic :</label>
+        <input type="text" id="title" name="title" class="form-control" placeholder="ex : Learn php " required />
+        <br>
+        <label class="h3">Content :</label>
+        <textarea name="contentDetails" id="contentDetails" rows="40" cols="80"></textarea>
+        <p></p>
+        <div hidden>
+            <p style="font-weight:bold;font-size:large;">Lựa chọn chế độ</p>
+            <label class="form-check-label" style="margin-left:20px;">
+                <input type="checkbox" name="incognito" class="form-check-input" value="1">Ẩn danh
+            </label>
+        </div>
+        <div>
+            <p style="font-weight:bold;font-size:large;">Lựa chọn danh mục liên quan</p>
+            @Html.DropDownList("DM")
+        </div>
+        <input type="submit" class="btn btn-success" value="Đăng bài">
+    }
+</div>

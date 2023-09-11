@@ -1,0 +1,5 @@
+﻿@model IEnumerable<QA.Models.Question>
+@foreach (var item in Model)
+{
+    <li><a href="@Url.Action("Detail","Home", new { id = item.IDQuestion })">@Html.Action("LimitWord","Question",new { originalText = item.Topic })   </a><span>@item.View lượt xem</span></li>
+}

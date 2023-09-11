@@ -1,0 +1,56 @@
+﻿@model IEnumerable<QA.Models.Account>
+@{
+    ViewBag.Title = "Rank";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+    int i = 0;
+}
+
+<div class="col-lg-6">
+    <div class="card-style mb-30">
+        <h6 class="mb-10">Table head options</h6>
+        <p class="text-sm mb-20">
+            Use one of two modifier classes to make thead appear light
+            or dark gray.
+        </p>
+        <div class="table-wrapper table-responsive">
+            <table class="table striped-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><h6>Username</h6></th>
+                        <th><h6>Email</h6></th>
+                        <th><h6>Point</h6></th>
+                    </tr>
+                    <!-- end table row-->
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                       i++;
+                    <tr>
+                        <td>
+                            <h6 class="text-sm">#@i</h6>
+                        </td>
+                        <td>
+                            <p>@item.UserName</p>
+                        </td>
+                        <td>
+                            <p>@item.Email</p>
+                        </td>
+                        <td>
+                            <p>@item.Point</p>
+                        </td>
+                    </tr>
+                    }
+                    <!-- end table row -->
+                    
+                    <!-- end table row -->
+                </tbody>
+            </table>
+            <!-- end table -->
+        </div>
+    </div>
+    <!-- end card -->
+</div>
+<!-- end col -->
+          

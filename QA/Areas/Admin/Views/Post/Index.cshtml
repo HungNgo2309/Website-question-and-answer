@@ -1,0 +1,83 @@
+﻿@model IEnumerable<QA.Models.Post>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Bài đăng</h2>
+<h2>ManagerUser</h2>
+<div class="tables-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-style mb-30">
+                <h6 class="mb-10">Data Table</h6>
+                <p class="text-sm mb-20">
+                    For basic styling—light padding and only horizontal
+                    dividers—use the class table.
+                </p>
+
+                <div class="table-wrapper table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><h6>Tên bài viết</h6></th>
+                                <th><h6>Vị trí</h6></th>
+                                <th><h6>Quản lí</h6></th>
+                            </tr>
+                            <!-- end table row-->
+                        </thead>
+                        <tbody>
+                            <p>Post Left</p>
+                            <Button class="btn btn-primary"><a href="@Url.Action("AddMain","Post")">Thêm</a></Button>
+                            <p>Post Right</p>
+                            <Button class="btn btn-success"><a href="@Url.Action("Add","Post")">Thêm</a></Button>
+                            @foreach (var item in Model)
+                            {
+                                if (item.Postmain == 1)
+                                {
+                                    <tr>
+                                        <td class="min-width">
+                                            <div class="lead">
+                                                <div class="lead-text">
+                                                    <p>@item.Topic</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="min-width">
+                                            <div class="lead-text">
+                                                @if (item.Postmain == 1)
+                                                {
+                                                    <p>Tin chính</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>Tin phụ</p>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="action">
+                                                <button class="text-danger">
+                                                    <i class="lni lni-trash-can"></i>
+                                                </button>
+                                                <button>
+                                                    <a href="@Url.Action("Detail", "Post", new { id = item.IDPost })"><i class="lni lni-pencil"></i></a>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            </hr>
+
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+            </div>
+            <!-- end card -->
+        </div>
+        <!-- end col -->
+    </div>
+</div>
+

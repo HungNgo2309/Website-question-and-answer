@@ -1,0 +1,116 @@
+﻿@model IEnumerable<QA.Models.Account>
+@{
+    ViewBag.Title = "Rank";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 0;
+}
+<style>
+    .mb-30 {
+        margin-bottom: 30px;
+    }
+
+    .card-style {
+        background: #fff;
+        box-sizing: border-box;
+        padding: 25px 30px;
+        position: relative;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0px 10px 20px rgb(200 208 216 / 30%);
+        border-radius: 10px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .mb-10 {
+        font-weight: bold;
+        font-size: x-large;
+        text-align: center;
+    }
+</style>
+<div class="col-lg-6" style="max-width:70%; margin-left:20%;">
+    <div class="card-style mb-30">
+        <h6 class="mb-10">Bảng Xếp Hạng</h6>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#RankModal">
+            Thông tin danh hiệu
+        </button>
+        <div class="table-wrapper table-responsive">
+            <table class="table striped-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><h6>Tên người dùng</h6></th>
+                        <th><h6>Email</h6></th>
+                        <th><h6>Điểm</h6></th>
+                        <th><h6>Danh hiệu</h6></th>
+                    </tr>
+                    <!-- end table row-->
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                    <tr>
+                        <td>
+                            <h6 class="text-sm">#@i</h6>
+                        </td>
+                        <td>
+                            <p>@item.UserName</p>
+                        </td>
+                        <td>
+                            <p>@item.Email</p>
+                        </td>
+                        <td>
+                            <p>@item.Point</p>
+                        </td>
+                        <td>
+                            <p>@Html.Action("InfoRank","Info", new {id=item.IDAccount})</p>
+                        </td>
+                    </tr>
+                    }
+                    <!-- end table row -->
+                    <!-- end table row -->
+                </tbody>
+            </table>
+            <!-- end table -->
+        </div>
+    </div>
+    <!-- end card -->
+</div>
+
+
+
+<!-- The Modal -->
+<div class="modal" id="RankModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p> 1.Hội viên xuất sắc (Great Answer): Được trao cho người trả lời câu hỏi và nhận được 100 bình chọn trở lên cho câu trả lời của họ.</p>
+
+                <p> 2.Hội viên nổi tiếng (Famous Question): Được trao cho người đăng câu hỏi và nhận được 10.000 lượt xem trở lên cho câu hỏi của họ.</p>
+
+                <p> 3.Hội viên thông thạo (Guru): Được trao cho người trả lời câu hỏi và có được ít nhất 50 câu trả lời được bình chọn là đúng.</p>
+
+                <p>4.Hội viên có sự đóng góp tốt (Good Answer): Được trao cho người trả lời câu hỏi và có được ít nhất 25 bình chọn cho câu trả lời của họ.</p>
+
+                <p> 5.Hội viên có sự đóng góp xuất sắc (Great Question): Được trao cho người đăng câu hỏi và có được ít nhất 100 bình chọn cho câu hỏi của họ.</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

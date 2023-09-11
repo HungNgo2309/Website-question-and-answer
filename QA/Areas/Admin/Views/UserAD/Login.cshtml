@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body>
+    <style>
+        body {
+            background: #007bff;
+            background: linear-gradient(to right, #0062E6, #33AEFF);
+        }
+
+        .card-img-left {
+            width: 45%;
+            /* Link to your background image using in the property below! */
+            background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
+            background-size: cover;
+        }
+
+        .btn-login {
+            font-size: 0.9rem;
+            letter-spacing: 0.05rem;
+            padding: 0.75rem 1rem;
+        }
+
+        .btn-google {
+            color: white !important;
+            background-color: #ea4335;
+        }
+
+        .btn-facebook {
+            color: white !important;
+            background-color: #3b5998;
+        }
+
+        .avatar img {
+            margin-left: 35%;
+            border-radius: 50%;
+            width: 100px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-9 mx-auto">
+                <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+                    <div class="card-img-left d-none d-md-flex">
+                        <!-- Background image for card set in CSS! -->
+                    </div>
+                    <div class="card-body p-4 p-sm-5">
+                        <h5 class="card-title text-center mb-5 fw-light fs-5">Đăng nhập ADmin</h5>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.ValidationSummary(true)
+                            <div class="avatar">
+                                <img src="~/Content/Images/logo.png" />
+                            </div>
+                            <h6 style="color:red;">@ViewBag.ThongBao</h6>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="login" id="floatingInputUsername" placeholder="Tên đăng nhập hoặc Email" required autofocus>
+                                <label for="floatingInputUsername">Tài khoản</label><span style="color: red;">* @ViewData["err1"]</span>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Nhập mật khẩu">
+                                <label for="floatingPassword">Mật khẩu</label><span style="color: red;">* @ViewData["err2"]</span>
+                            </div>
+                            <div class="d-grid mb-2" style="margin-left:35%">
+                                <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Đăng nhập</button>
+                            </div>
+                        }
+                        </>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

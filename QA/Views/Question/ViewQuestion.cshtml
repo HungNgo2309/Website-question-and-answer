@@ -1,0 +1,27 @@
+﻿@using QA.Models
+@using PagedList.Mvc;
+@model  PagedList.PagedList<Question>
+@foreach (var item in Model)
+{
+    if (item.Incognito == false)
+    {
+        QuestionAndAnswerEntities db = new QuestionAndAnswerEntities();
+        Account ac = db.Accounts.SingleOrDefault(m => m.IDAccount == item.IDAccount);
+        <div class="question">
+            <img src="~/Content/Images/avatar/@ac.Avatar" alt="Avatar" style="width:90px">
+            <p><span>@ac.UserName</span>@Html.Action("Tg", "Question", new { tgbd = item.Datetime })</p>
+            <a href="@Url.Action("Detail","Home", new { id = item.IDQuestion })">@item.Topic</a>
+        </div>
+    }
+    else
+    {
+        <div class="question">
+            <img src="~/Content/Images/img_avatar1.png" alt="Avatar" style="width:90px">
+            <p><span>Ẩn danh</span>@Html.Action("Tg", "Question", new { tgbd = item.Datetime })</p>
+            <a href="@Url.Action("Detail","Home", new { id = item.IDQuestion })">@item.Topic</a>
+        </div>
+    }
+}
+        <div class="product__pagination" style="margin-left:380px">
+            @Html.PagedListPager(Model, page => Url.Action("Index", "Home", new { page, id = 2 }))
+        </div>

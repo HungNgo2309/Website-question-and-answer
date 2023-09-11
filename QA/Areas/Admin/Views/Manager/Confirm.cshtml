@@ -1,0 +1,95 @@
+﻿@model IEnumerable<QA.Models.Question>
+@{
+    ViewBag.Title = "Confirm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="tables-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-style mb-30">
+                
+                <div class="table-wrapper table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><h6>Người đăng</h6></th>
+                                <th><h6>Tiêu đề</h6></th>
+                                <th><h6>Truy xuất</h6></th>
+                                <th><h6>Quản lí</h6></th>
+                            </tr>
+                            <!-- end table row-->
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td class="min-width">
+                                    <div class="lead">
+                                        <div class="lead-image">
+                                            <img src="~/Content/Images/avatar/@item.Account.Avatar"
+                                                 alt="" />
+                                        </div>
+                                        <div class="lead-text">
+                                            <p>@item.Account.UserName</p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="min-width">
+                                    <p><a href="@Url.Action("Detail","Manager",new { id=item.IDQuestion})">@item.Topic</a></p>
+                                </td>
+                                <td class="min-width">
+                                    <p><a href="@Url.Action("ManagerAnswer","Answer",new {idqs=item.IDQuestion })">Câu trả lời</a></p>
+                                </td>
+                                <td>
+                                    <div class="action">
+                                        <button class="text-danger" onclick="Delete(@item.IDQuestion)">
+                                            <a  href="@Url.Action("Delete","Manager",new {idqs=item.IDQuestion })"><i class="lni lni-trash-can"></i></a>
+                                        </button>
+                                        @if (item.Verify == false)
+                                        {
+                                            <a href="@Url.Action("Verify","Manager",new {id=item.IDQuestion })"><input type="button" class="btn btn-info" value="Duyệt" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Verify","Manager",new {id=item.IDQuestion })"><input type="button"  class="btn btn-info" value="Ẩn" /></a>
+                                        }
+
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+            </div>
+            <!-- end card -->
+        </div>
+        <!-- end col -->
+    </div>
+    </div>
+<script>
+      function Delete(idqs) {
+        let confirmAction = confirm("Bạn có chắc muốn xóa?");
+          if (confirmAction) {
+           $.ajax({
+                url: '@Url.Action("Xoa", "Manager")',
+                type: 'post',
+               data: {
+                   id: idqs
+               },
+                success: function (data) {
+                    if (data.code == 200) {
+                        location.reload();
+                    } else {
+                        alert("Erro");
+                    }
+                }
+            });
+        } else {
+          alert("Action canceled");
+        }
+    };
+</script>

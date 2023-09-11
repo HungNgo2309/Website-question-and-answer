@@ -1,0 +1,38 @@
+﻿@model QA.Models.Post
+@{
+    ViewBag.Title = "DeatilPost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .fa-sort-asc::before {
+        content: "\f0de";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+    }
+
+    .fa-sort-desc::before {
+        content: "\f0dd";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+    }
+
+    .mb-30 {
+        margin-bottom: 30px;
+    }
+
+    .card-style {
+        background: #fff;
+        box-sizing: border-box;
+        padding: 25px 30px;
+        position: relative;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0px 10px 20px rgb(200 208 216 / 30%);
+        border-radius: 10px;
+    }
+</style>
+<div class="mb-30 card-style">
+    <h2>@Model.Topic</h2>
+    @Model.Description
+</div>
+

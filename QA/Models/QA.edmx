@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QuestionAndAnswerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="IDAccount" />
+          </Key>
+          <Property Name="IDAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Avatar" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PassWord" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Point" Type="int" />
+          <Property Name="Block" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="IDAdmin" />
+          </Key>
+          <Property Name="IDAdmin" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassWord" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="IDAnswer" />
+          </Key>
+          <Property Name="IDAnswer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Incognito" Type="bit" Nullable="false" />
+          <Property Name="IDAccount" Type="int" Nullable="false" />
+          <Property Name="IDQuestion" Type="int" Nullable="false" />
+          <Property Name="Datetime" Type="datetime" />
+          <Property Name="Show" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="IDCategory" />
+          </Key>
+          <Property Name="IDCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Point">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDAccount" Type="int" Nullable="false" />
+          <Property Name="IDQuestion" Type="int" Nullable="false" />
+          <Property Name="Increase" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PointAS">
+          <Key>
+            <PropertyRef Name="IDPointAS" />
+          </Key>
+          <Property Name="IDPointAS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDQuestion" Type="int" Nullable="false" />
+          <Property Name="IDAnswer" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="IDPost" />
+          </Key>
+          <Property Name="IDPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Topic" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Postmain" Type="int" Nullable="false" />
+          <Property Name="Images" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="IDQuestion" />
+          </Key>
+          <Property Name="IDQuestion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Topic" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IDCategory" Type="int" Nullable="false" />
+          <Property Name="Incognito" Type="bit" Nullable="false" />
+          <Property Name="IDAccount" Type="int" Nullable="false" />
+          <Property Name="Verify" Type="bit" Nullable="false" />
+          <Property Name="Datetime" Type="datetime" />
+          <Property Name="View" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Answer_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDAccount" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answer_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="IDQuestion" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="IDQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Point_Account1">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Point" Type="Self.Point" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDAccount" />
+            </Principal>
+            <Dependent Role="Point">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Point_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Point" Type="Self.Point" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="IDQuestion" />
+            </Principal>
+            <Dependent Role="Point">
+              <PropertyRef Name="IDQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PointAS_Answer">
+          <End Role="Answer" Type="Self.Answer" Multiplicity="1" />
+          <End Role="PointAS" Type="Self.PointAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="IDAnswer" />
+            </Principal>
+            <Dependent Role="PointAS">
+              <PropertyRef Name="IDAnswer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PointAS_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="PointAS" Type="Self.PointAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="IDQuestion" />
+            </Principal>
+            <Dependent Role="PointAS">
+              <PropertyRef Name="IDQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDAccount" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="IDCategory" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="IDCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuestionAndAnswerModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Point" EntityType="Self.Point" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PointAS" EntityType="Self.PointAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Answer_Account" Association="Self.FK_Answer_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answer_Question" Association="Self.FK_Answer_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Point_Account1" Association="Self.FK_Point_Account1">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Point" EntitySet="Point" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Point_Question" Association="Self.FK_Point_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Point" EntitySet="Point" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PointAS_Answer" Association="Self.FK_PointAS_Answer">
+            <End Role="Answer" EntitySet="Answer" />
+            <End Role="PointAS" EntitySet="PointAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PointAS_Question" Association="Self.FK_PointAS_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="PointAS" EntitySet="PointAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Account" Association="Self.FK_Question_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Category" Association="Self.FK_Question_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuestionAndAnswerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="IDAccount" />
+          </Key>
+          <Property Name="IDAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Avatar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Point" Type="Int32" />
+          <Property Name="Block" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Answer_Account" FromRole="Account" ToRole="Answer" />
+          <NavigationProperty Name="Points" Relationship="Self.FK_Point_Account1" FromRole="Account" ToRole="Point" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Question_Account" FromRole="Account" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="IDAdmin" />
+          </Key>
+          <Property Name="IDAdmin" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="IDAnswer" />
+          </Key>
+          <Property Name="IDAnswer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Incognito" Type="Boolean" Nullable="false" />
+          <Property Name="IDAccount" Type="Int32" Nullable="false" />
+          <Property Name="IDQuestion" Type="Int32" Nullable="false" />
+          <Property Name="Datetime" Type="DateTime" Precision="3" />
+          <Property Name="Show" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Answer_Account" FromRole="Answer" ToRole="Account" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Answer_Question" FromRole="Answer" ToRole="Question" />
+          <NavigationProperty Name="PointAS" Relationship="Self.FK_PointAS_Answer" FromRole="Answer" ToRole="PointAS" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="IDCategory" />
+          </Key>
+          <Property Name="IDCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Question_Category" FromRole="Category" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Point">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDAccount" Type="Int32" Nullable="false" />
+          <Property Name="IDQuestion" Type="Int32" Nullable="false" />
+          <Property Name="Increase" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Point_Account1" FromRole="Point" ToRole="Account" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Point_Question" FromRole="Point" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="PointA">
+          <Key>
+            <PropertyRef Name="IDPointAS" />
+          </Key>
+          <Property Name="IDPointAS" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDQuestion" Type="Int32" Nullable="false" />
+          <Property Name="IDAnswer" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answer" Relationship="Self.FK_PointAS_Answer" FromRole="PointAS" ToRole="Answer" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_PointAS_Question" FromRole="PointAS" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="IDPost" />
+          </Key>
+          <Property Name="IDPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Topic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Postmain" Type="Int32" Nullable="false" />
+          <Property Name="Images" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="IDQuestion" />
+          </Key>
+          <Property Name="IDQuestion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Topic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDCategory" Type="Int32" Nullable="false" />
+          <Property Name="Incognito" Type="Boolean" Nullable="false" />
+          <Property Name="IDAccount" Type="Int32" Nullable="false" />
+          <Property Name="Verify" Type="Boolean" Nullable="false" />
+          <Property Name="Datetime" Type="DateTime" Precision="3" />
+          <Property Name="View" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Question_Account" FromRole="Question" ToRole="Account" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Answer_Question" FromRole="Question" ToRole="Answer" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Question_Category" FromRole="Question" ToRole="Category" />
+          <NavigationProperty Name="Points" Relationship="Self.FK_Point_Question" FromRole="Question" ToRole="Point" />
+          <NavigationProperty Name="PointAS" Relationship="Self.FK_PointAS_Question" FromRole="Question" ToRole="PointAS" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Answer_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDAccount" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Point_Account1">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Point" Type="Self.Point" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDAccount" />
+            </Principal>
+            <Dependent Role="Point">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDAccount" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answer_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="IDQuestion" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="IDQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PointAS_Answer">
+          <End Role="Answer" Type="Self.Answer" Multiplicity="1" />
+          <End Role="PointAS" Type="Self.PointA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="IDAnswer" />
+            </Principal>
+            <Dependent Role="PointAS">
+              <PropertyRef Name="IDAnswer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="IDCategory" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="IDCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Point_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Point" Type="Self.Point" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="IDQuestion" />
+            </Principal>
+            <Dependent Role="Point">
+              <PropertyRef Name="IDQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PointAS_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="PointAS" Type="Self.PointA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="IDQuestion" />
+            </Principal>
+            <Dependent Role="PointAS">
+              <PropertyRef Name="IDQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuestionAndAnswerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Answers" EntityType="Self.Answer" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Points" EntityType="Self.Point" />
+          <EntitySet Name="PointAS" EntityType="Self.PointA" />
+          <EntitySet Name="Posts" EntityType="Self.Post" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_Answer_Account" Association="Self.FK_Answer_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Point_Account1" Association="Self.FK_Point_Account1">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Point" EntitySet="Points" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Account" Association="Self.FK_Question_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answer_Question" Association="Self.FK_Answer_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PointAS_Answer" Association="Self.FK_PointAS_Answer">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="PointAS" EntitySet="PointAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Category" Association="Self.FK_Question_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Point_Question" Association="Self.FK_Point_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="Point" EntitySet="Points" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PointAS_Question" Association="Self.FK_PointAS_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="PointAS" EntitySet="PointAS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuestionAndAnswerModelStoreContainer" CdmEntityContainer="QuestionAndAnswerEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="IDAdmin" ColumnName="IDAdmin" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.Answer">
+              <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="IDAnswer" ColumnName="IDAnswer" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Incognito" ColumnName="Incognito" />
+                <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
+                <ScalarProperty Name="IDQuestion" ColumnName="IDQuestion" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="Show" ColumnName="Show" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="IDCategory" ColumnName="IDCategory" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Points">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.Point">
+              <MappingFragment StoreEntitySet="Point">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
+                <ScalarProperty Name="IDQuestion" ColumnName="IDQuestion" />
+                <ScalarProperty Name="Increase" ColumnName="Increase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PointAS">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.PointA">
+              <MappingFragment StoreEntitySet="PointAS">
+                <ScalarProperty Name="IDPointAS" ColumnName="IDPointAS" />
+                <ScalarProperty Name="IDQuestion" ColumnName="IDQuestion" />
+                <ScalarProperty Name="IDAnswer" ColumnName="IDAnswer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="IDPost" ColumnName="IDPost" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Postmain" ColumnName="Postmain" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="IDQuestion" ColumnName="IDQuestion" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="IDCategory" ColumnName="IDCategory" />
+                <ScalarProperty Name="Incognito" ColumnName="Incognito" />
+                <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
+                <ScalarProperty Name="Verify" ColumnName="Verify" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="View" ColumnName="View" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QuestionAndAnswerModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

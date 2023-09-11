@@ -1,0 +1,102 @@
+﻿@model IEnumerable<QA.Models.Category>
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="tables-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-style mb-30">
+                
+                    <!-- Button to Open the Modal -->
+                    @using (Html.BeginForm("AddCT", "Manager", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <label>Tên danh mục</label>
+                            <input type="text" name="danhmuc" />
+                        </div>
+                        <input type="submit" class="btn btn-info" value="Thêm">
+                    }
+
+                    <!-- The Modal -->
+
+                </div>
+                <div class="table-wrapper table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><h6>ID</h6></th>
+                                <th><h6>Tên danh mục</h6></th>
+                                <th><h6>Quản lí</h6></th>
+                            </tr>
+                            <!-- end table row-->
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="min-width">
+                                        <div class="lead">
+                                            <div class="lead-image">
+                                                <label>@item.IDCategory</label>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="min-width">
+                                        <p>@item.Name</p>
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <button class="text-danger">
+                                                <a href="@Url.Action("DeleteCT","Manager",new { idct=item.IDCategory})"> <i class="lni lni-trash-can"></i></a>
+                                            </button>
+                                            <button data-toggle="modal" data-target="#myEdit">
+                                                <i class="lni lni-pencil"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal" id="myEdit">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Thêm danh mục</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    @using (Html.BeginForm("EditCT", "Manager", FormMethod.Post, new { @enctype = "multipart/form-data", id=item.IDCategory }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <!-- Modal body -->
+                                                        <div class="modal-body">
+                                                            <label>Tên danh mục</label>
+                                                            <input type="text" name="danhmuc" value="@item.Name"/>
+                                                        </div>
+                                                        <input type="submit" class="btn btn-info" value="Thay đổi">
+                                                    }
+
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+            </div>
+            <!-- end card -->
+        </div>
+        <!-- end col -->
+    </div>
+</div>
+

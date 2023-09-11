@@ -1,0 +1,17 @@
+﻿@model IEnumerable<QA.Models.Account>
+@{int i = 0;
+}
+@foreach (var item in Model)
+{
+    i++;
+    <div class="nl-item">
+        <div class="nl-img">
+            <h6 class="text-sm">#@i</h6>
+        </div>
+        <div class="nl-title">
+            <p>@item.UserName</p>
+        </div>
+    </div>
+}
+
+

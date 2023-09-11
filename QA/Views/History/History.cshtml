@@ -1,0 +1,78 @@
+﻿@model IEnumerable<QA.Models.Question>
+@using QA.Models
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 style="text-align:center;">History</h2>
+<style>
+    .question {
+        border: 2px solid #ccc;
+        background-color: #eee;
+        border-radius: 5px;
+        padding: 16px;
+        margin: 16px 0;
+        width: 72%;
+        margin-left: 16%;
+    }
+
+        .question::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .question img {
+            float: left;
+            margin-right: 20px;
+            border-radius: 50%;
+        }
+
+        .question span {
+            font-size: 20px;
+            margin-right: 15px;
+        }
+</style>
+@foreach (var item in Model)
+{
+    QuestionAndAnswerEntities db = new QuestionAndAnswerEntities();
+    Account ac = db.Accounts.SingleOrDefault(m => m.IDAccount == item.IDAccount);
+
+    <div class="question row ">
+        <div class="col-sm-8">
+            <img src="~/Content/Images/avatar/@ac.Avatar" alt="Avatar" style="width:90px">
+            <p><span>@ac.UserName</span>@item.Datetime</p>
+            <a href="@Url.Action("Detail","Home", new { id = item.IDQuestion })">@item.Topic</a>
+        </div>
+        <div class=" col-sm-3">
+            <button class="btn btn-danger" onclick="confirmAction(@item.IDQuestion)">Thu hồi</button>
+            <button class="btn btn-success"><a href="@Url.Action("Edit","History", new {id=item.IDQuestion})">Chỉnh sửa</a></button>
+        </div>
+    </div>
+
+}
+
+    <script>
+      // The function below will start the confirmation dialog
+      function confirmAction(idqs) {
+        let confirmAction = confirm("Bạn có chắc muốn xóa?");
+          if (confirmAction) {
+           $.ajax({
+                url: '@Url.Action("Delete", "History")',
+                type: 'post',
+               data: {
+                   id: idqs
+               },
+                success: function (data) {
+                    if (data.code == 200) {
+                        location.reload();
+                    } else {
+                        alert("Erro");
+                    }
+                }
+            });
+        } else {
+          alert("Action canceled");
+        }
+      }
+    </script>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<QA.Models.Answer>
+@using QA.Models
+@{
+    QuestionAndAnswerEntities db = new QuestionAndAnswerEntities();
+    int ml = 0;
+    Account ac = (Account)Session["TaiKhoan"];
+    if (ac != null)
+    {
+        ml = ac.IDAccount;
+    }
+    int ol = 0;
+    int nn = ViewBag.IDQ;
+    PointA pa = db.PointAS.SingleOrDefault(m => m.IDQuestion == nn);
+    if (pa != null)
+    {
+        ol = pa.IDAnswer;
+    }
+}
+@foreach (var item in Model)
+{
+
+<div class="qa_container"style="margin-left:-20%;">
+    <div class="col1">
+        <div class="userimg">
+            <img src="~/Content/Images/avatar/@item.Account.Avatar"
+                 alt="" srcset="">
+        </div>
+        @if (ml == item.IDAccount || Session["TaiKhoan"] == null)
+        {
+            <div class="vote">
+                <button class="upvote v" disabled>
+                    <i class="fa fa-sort-asc"></i>
+                </button>
+                <div class="count">@item.Account.Point</div>
+               
+                <button class="downvote v" disabled>
+                    <i class="fa fa-sort-desc"></i>
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="vote">
+                @if (ol == item.IDAnswer)
+                {
+                <button class="upvote v" disabled>
+                    <i class="fa fa-sort-asc"></i>
+                </button>
+                        <div class="count">@item.Account.Point</div>
+                    using (Html.BeginForm("PointAnswer", "Question", new { idas = item.IDAnswer, idquestion = item.IDQuestion }))
+                    {
+                        <button class="downvote v">
+                            <i class="fa fa-sort-desc"></i>
+                        </button>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("PointAnswer", "Question", new { idas = item.IDAnswer, idquestion = item.IDQuestion }))
+                    {
+                        <button class="upvote v">
+                            <i class="fa fa-sort-asc"></i>
+                        </button>}
+                        <div class="count">@item.Account.Point</div>
+                        <button class="downvote v" disabled>
+                            <i class="fa fa-sort-desc"></i>
+                        </button>
+                }
+            </div>
+        }
+    </div>
+    <div class="col2">
+        <div class="infobar cdw">
+            <div class="name">@item.Account.UserName <p style="color:red;">@Html.Action("InfoRank", "Info", new { id = item.IDAccount })</p> </div>
+            <div class="date">Asked :</div>
+            <p>@Html.Action("Tg","Question",new { tgbd= Convert.ToDateTime(item.Datetime) })</p>
+        </div>
+        @if (ol == item.IDAnswer)
+        {
+            <p style="color:forestgreen;"><i class="fa fa-check" style="color:forestgreen;"></i>Câu trả lời hữu ích</p>
+        }
+        <br>
+        <div class="details">
+            @Html.Raw(item.Content)
+        </div>
+    </div>
+
+</div>
+}

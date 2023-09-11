@@ -1,0 +1,39 @@
+﻿@model QA.Models.Question
+@using QA.Models
+@{
+    QuestionAndAnswerEntities db = new QuestionAndAnswerEntities();
+    Account ac = (Account)Session["TaiKhoan"];
+    Point po = db.Points.SingleOrDefault(n => n.IDAccount == ac.IDAccount && n.IDQuestion == Model.IDQuestion);
+}
+@if (Session["TaiKhoan"] == null || ac.IDAccount == Model.IDAccount)
+{
+    <button class="upvote v" id="increaseq" disabled>
+        <i class="fa fa-sort-asc" aria-hidden="true"></i>
+    </button>
+    <div class="count" id="point"></div>
+    <button class="downvote v" id="reduceq" disabled>
+        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+    </button>
+}
+else
+{
+    if (po.Increase == true)
+    {
+        <button class="upvote v" id="increaseq" disabled>
+            <i class="fa fa-sort-asc" aria-hidden="true"></i>
+        </button>
+        <div class="count" id="point"></div>
+        <button class="downvote v" id="reduceq">
+            <i class="fa fa-sort-desc" aria-hidden="true"></i>
+        </button>
+    }
+    else
+    {
+        <button class="upvote v" id="increaseq">
+            <i class="fa fa-sort-asc" aria-hidden="true"></i>
+        </button>
+        <div class="count" id="point"></div>
+        <button class="downvote v" disabled id="reduceq">
+            <i class="fa fa-sort-desc" aria-hidden="true"></i>
+        </button>}
+}

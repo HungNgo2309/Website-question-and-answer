@@ -1,0 +1,17 @@
+﻿@model IEnumerable<QA.Models.Post>
+<div class="col-md-6 tn-left">
+   
+    <div class="row tn-slider">
+        @foreach (var item in Model)
+        {
+            <div>
+                <div class="tn-img">
+                    <img style="height:202px;" src="~/Content/Images/@item.Images" />
+                    <div class="tn-title">
+                        <a href="@Url.Action("DetailPost","Home", new {id =item.IDPost })">@item.Topic</a>
+                    </div>
+                </div>
+            </div>
+        }   
+     </div>
+</div>

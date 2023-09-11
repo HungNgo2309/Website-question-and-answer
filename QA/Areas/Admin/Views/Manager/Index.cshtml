@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="icon-card mb-30">
+            <div class="icon purple">
+                <i class="lni lni-question-circle"></i>
+            </div>
+            <div class="content">
+                <h6 class="mb-10">Tống câu hỏi</h6>
+                <h3 class="text-bold mb-10">@Html.Action("SumQuestion","Manager")</h3>
+                
+            </div>
+        </div>
+        <!-- End Icon Cart -->
+    </div>
+    <!-- End Col -->
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="icon-card mb-30">
+            <div class="icon success">
+                <i class="lni lni-reply"></i>
+            </div>
+            <div class="content">
+                <h6 class="mb-10">Tổng câu trả lời</h6>
+                <h3 class="text-bold mb-10">@Html.Action("SumAnswer", "Manager")</h3>
+                
+            </div>
+        </div>
+        <!-- End Icon Cart -->
+    </div>
+    <!-- End Col -->
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="icon-card mb-30">
+            <div class="icon primary">
+                <i class="lni lni-user"></i>
+            </div>
+            <div class="content">
+                <h6 class="mb-10">Tổng số tài khoản</h6>
+                <h3 class="text-bold mb-10">@Html.Action("SumAccount", "Manager")</h3>
+                
+            </div>
+        </div>
+        <!-- End Icon Cart -->
+    </div>
+    <!-- End Col -->
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="icon-card mb-30">
+            <div class="icon orange">
+                <i class="lni lni-users"></i>
+            </div>
+            <div class="content">
+                <h6 class="mb-10">Số tài khoản tham gia</h6>
+                <h3 class="text-bold mb-10">@Html.Action("Activity", "Manager")</h3>
+                
+            </div>
+        </div>
+        <!-- End Icon Cart -->
+    </div>
+    <!-- End Col -->
+</div>

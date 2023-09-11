@@ -1,0 +1,13 @@
+﻿@model IEnumerable<QA.Models.Answer>
+@foreach (var item in Model)
+{
+    if (item.Show == false)
+    {
+        <h6 style="text-align:center;color:blue;"><i class="fa fa-bell" aria-hidden="true"></i>@item.Account.UserName đã bình luận về câu hỏi<a href="@Url.Action("ShowAnswer", "Home", new { idqs = item.IDQuestion, idas = item.IDAnswer })">@item.Question.Topic</a>của bạn @Html.Action("Tg", "Question", new { tgbd = Convert.ToDateTime(item.Datetime) })</h6>
+        <hr />
+    }
+    else
+    {
+    <h6 style="text-align:center"><i class="fa fa-bell" aria-hidden="true"></i>@item.Account.UserName đã bình luận về câu hỏi<a href="@Url.Action("ShowAnswer", "Home", new { idqs = item.IDQuestion, idas = item.IDAnswer })">@item.Question.Topic</a>của bạn @Html.Action("Tg", "Question", new { tgbd = Convert.ToDateTime(item.Datetime) })</h6>
+    <hr />}
+}

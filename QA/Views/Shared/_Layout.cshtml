@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="~/Content/img/favicon.ico" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-CRS7TcwZrXu0LS1QkHdFY8sVwUhsTpfbxodvMTU6pAkU7zZ0ePtaNUohvNjdxT8h" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link href="~/Content/lib/slick/slick.css" rel="stylesheet">
+    <link href="~/Content/lib/slick/slick-theme.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <!-- Template Stylesheet -->
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/super-build/ckeditor.js"></script>
+</head>
+<body>
+    <!-- Top Bar Start -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tb-contact">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tb-menu">
+                        @Html.Action("loginlogout", "Home")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Start -->
+    <!-- Brand Start -->
+    <div class="brand">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4">
+                    <div class="b-logo">
+                        <a href="index.html">
+                            <img style="border-radius:50%;" src="~/Content/Images/A.png" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4">
+                    <div class="b-ads">
+                        <!-- <a href="https://htmlcodex.com">
+          <img style="height:100px;" src="~/Content/Images/HỎI ĐÁP HỖ TRỢ HỌC TẬP.gif" alt="Ads">
+      </a>--><h2>Website Hỏi Đáp Hỗ Trợ Học Tập</h2>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <div class="b-search">
+                        @using (Html.BeginForm("Search", "Home"))
+                        {
+                            @Html.ValidationSummary(true)
+                            <input type="text" name="search" placeholder="Search" id="searchInput">
+                            <button><i class="fa fa-search"></i></button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Brand End --><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+    <!-- Nav Bar Start -->
+    <div class="nav-bar">
+        <div class="container">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <a href="#" class="navbar-brand">MENU</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+
+                    <div class="navbar-nav mr-auto">
+                        <a href="@Url.Action("Index","Home")" class="nav-item nav-link">Trang chủ</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Danh mục</a>
+                            <div class="dropdown-menu">
+                                @Html.Action("Category", "Home")
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Rank","User")" class="nav-item nav-link">Xếp hạng</a>
+                        @if (Session["TaiKhoan"] != null)
+                        {
+                            <a href="@Url.Action("History","History")" class="nav-item nav-link">Lịch Sử</a>
+                        }
+                        <a href="@Url.Action("Contact","Home")" class="nav-item nav-link">Liên hệ</a>
+
+                    </div>
+
+                    <div class="social ml-auto ">
+                        <a href=""><i class="fab fa-twitter"></i></a>
+                        <a href=""><i class="fab fa-facebook-f"></i></a>
+                        <a href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                        <a href=""><i class="fab fa-youtube"></i></a>
+                        
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+    <!-- Nav Bar End -->
+    <!-- Hero Section End -->
+    @RenderBody()
+    <!-- Footer Start -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Get in Touch</h3>
+                        <div class="contact-info">
+                            <p><i class="fa fa-map-marker"></i>Thủ Dầu Một -  Bình Dương</p>
+                            <p><i class="fa fa-envelope"></i>hungnnvh@gmail.com</p>
+                            <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                                <a href=""><i class="fab fa-youtube"></i></a>
+                                <i class="fa-"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Danh mục</h3>
+                        <ul>
+                            <li><a href="#">Công Nghệ Thông Tin</a></li>
+                            <li><a href="#">Điện Điện Tử</a></li>
+                            <li><a href="#">Công Nghệ Ô Tô</a></li>
+                            <li><a href="#">Hệ Thống Thông tin</a></li>
+                            <li><a href="#">Kiến thức chung</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+               
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Thông báo mới</h3>
+                        <div class="newsletter">
+                            <p>
+                                Bạn có thể điền thông tin Email của mình vào đây nếu cần chúng tôi tư vấn.
+                            </p>
+                            <form>
+                                <input class="form-control" type="email" placeholder="Your email here">
+                                <button class="btn">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    <!-- Footer Menu Start -->
+   
+    <!-- Footer Menu End -->
+    <!-- Footer Bottom Start -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 copyright">
+                    <p>Copyright &copy; <a href="https://htmlcodex.com">2023</a>. All Rights Reserved</p>
+                </div>
+
+                <div class="col-md-6 template-by">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Bottom End -->
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/lib/easing/easing.min.js"></script>
+    <script src="~/Content/lib/slick/slick.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <!-- Template Javascript -->
+    <script src="~/Content/js/main.js"></script>
+    <script>
+        $("#searchInput").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetSearchValue","Home")',
+                dataType: "json",
+                data: { search: $("#searchInput").val() },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Topic, value: item.Topic };
+                    }));
+                },
+                error: function (xhr, status, error) {
+                    alert("Error");
+                }
+            });
+        }
+    });
+    </script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
